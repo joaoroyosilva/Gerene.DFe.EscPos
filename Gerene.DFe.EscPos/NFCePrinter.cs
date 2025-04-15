@@ -354,14 +354,25 @@ namespace Gerene.DFe.EscPos
                 regiao.ImprimirTexto($"Autorização: {_NFCe.protNFe.infProt.dhRecbto:dd/MM/yyyy HH:mm:ss}".TratarAcento(), OpenTamanhoFonte.Condensada);
                 #endregion
 
+                #region MS Nota Premiada
+                if (_NFCe.protNFe.infProt.xMsg.IsNotNull())
+                {
+                    _Printer.ImprimirTexto(_NFCe.protNFe.infProt.xMsg.TratarAcento(), OpenTamanhoFonte.Condensada);
+                    ImprimirSeparador();
+                }
+                #endregion
+
                 #region Tributos
                 if (ImprimirDeOlhoNoImposto)
-                    regiao.ImprimirTexto($"Valor aprox. dos tributos {_NFCe.NFe.infNFe.total.ICMSTot.vTotTrib.ToString("C2", Cultura)} conforme lei fed. 12.741/2012", OpenTamanhoFonte.Condensada);
+                {
+                    _Printer.ImprimirTexto($"Valor aprox. dos tributos {_NFCe.NFe.infNFe.total.ICMSTot.vTotTrib.ToString("C2", Cultura)} conforme lei fed. 12.741/2012", OpenTamanhoFonte.Condensada);
+                    ImprimirSeparador();
+                }
                 #endregion
 
                 #region Desenvolvedor
                 if (Desenvolvedor.IsNotNull())
-                    regiao.ImprimirTexto(Desenvolvedor, OpenTamanhoFonte.Condensada);
+                    _Printer.ImprimirTexto(Desenvolvedor, OpenTamanhoFonte.Condensada);
                 #endregion
 
                 #endregion
@@ -385,6 +396,15 @@ namespace Gerene.DFe.EscPos
                     _Printer.ImprimirTexto("CONSUMIDOR NÃO IDENTIFICADO".TratarAcento(), OpenTamanhoFonte.Condensada, CentralizadoSeTp80mm, OpenEstiloFonte.Negrito);
 
                 ImprimirSeparador();
+                #endregion
+
+                #region MS Nota Premiada
+                if (_NFCe.protNFe.infProt.xMsg.IsNotNull())
+                {
+                    _Printer.ImprimirTexto(_NFCe.protNFe.infProt.xMsg.TratarAcento(), OpenTamanhoFonte.Condensada, CentralizadoSeTp80mm);
+                    _Printer.PularLinhas(1);
+                    ImprimirSeparador();
+                }
                 #endregion
 
                 #region Número e série do documento
@@ -430,6 +450,6 @@ namespace Gerene.DFe.EscPos
 
             EnviarDados();
         }
-               
+
     }
 }
